@@ -1,25 +1,18 @@
-<template>
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-</template>
+<script setup lang="ts">
+import { RouterView } from "vue-router";
+import {Theme} from "@/core/constant/Theme.ts";
+import {onMounted} from "vue";
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
+onMounted(() => {
+  if (localStorage.theme === Theme.DARK || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    document.documentElement.classList.add(Theme.DARK)
+  } else {
+    document.documentElement.classList.remove(Theme.DARK)
   }
-}
+})
+
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<template>
+  <RouterView />
+</template>

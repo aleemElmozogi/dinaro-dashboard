@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dinaro Dashboard </title>
+    <meta name="language" content="arabic,english"/>
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180"/>
+    <meta name="theme-color" content="#F4D5B5"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <link rel="manifest" href="/site.webmanifest" crossorigin="use-credentials"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"/>
+    <meta name="robots" content="index"/>
+    <meta http-equiv="Pragma" content="Public"/>
+    <meta http-equiv="Cache-Control" content="Public"/>
+    <meta property="og:url" content=""/>
+    <meta property="og:type" content=""/>
+    <meta property="og:title" content=""/>
+    <meta property="og:description" content=""/>
+    <meta property="og:image" content="/logo.svg"/>
+    <meta name="author" content="faraj shuaib"/>
+    <meta name="copyright" content=""/>
+    <meta name="description" content="Dinaro Dashboard"/>
+
+    <style>
+        #InitScreenDOM {
+            height: 100vh;
+            background-color: #f7f7f7;
+            position: fixed;
+            z-index: 9999;
+            inset: 0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #InitScreenDOM > div {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            padding: 0px 3rem;
+            margin: auto;
+        }
+
+        #InitScreenDOM > div > img {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+        }
+
+        #InitScreenDOM > div > i {
+            color: #F4D5B5;
+            font-size: 3rem;
+        }
+    </style>
+</head>
+<body>
+<div id="app"></div>
+<script type="module" src="/src/main.ts"></script>
+<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+
+</body>
+</html>
