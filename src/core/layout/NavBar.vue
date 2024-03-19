@@ -10,7 +10,7 @@
       <div class="flex items-center gap-4">
         
 
-        <DropdownMenu v-if="auth.user">
+        <DropdownMenu v-if="auth.user" dir="rtl">
           <DropdownMenuTrigger>
             <Avatar>
               <AvatarImage :src="''" alt="@radix-vue"/>
@@ -18,8 +18,8 @@
             </Avatar>
           </DropdownMenuTrigger
           >
-          <DropdownMenuContent>
-            <DropdownMenuLabel>settings</DropdownMenuLabel>
+          <DropdownMenuContent dir="rtl">
+            <DropdownMenuLabel>الاعدادات</DropdownMenuLabel>
             <DropdownMenuSeparator/>
 
 
@@ -28,7 +28,7 @@
                 class="flex items-center gap-2"
             >
               <i class="bx bx-exit"></i>
-              <span>  logout </span></DropdownMenuItem
+              <span>  تسجيل الخروج </span></DropdownMenuItem
             >
           </DropdownMenuContent>
         </DropdownMenu>

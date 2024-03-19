@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row w-full h-screen bg-background">
+  <div class="flex flex-row w-full h-screen bg-primary-foreground/50">
     <SideBar :is_active="is_active" @toggleSidebar="toggleSidebar"/>
     <main
         class="flex flex-col flex-grow w-full transition-all duration-150 ease-in main"
@@ -13,7 +13,7 @@
       >
         <RouterView/>
       </section>
-      <footer class="p-5 py-5 text-center bg-secondary">
+      <footer class="p-5 py-5 text-center bg-primary-foreground">
         <p>
           <span class="text-primary">Dinaro App</span> ©
           {{ new Date().getFullYear() }}

@@ -1,6 +1,6 @@
 <template>
   <aside
-    :class="is_active ? '-translate-x-0' : '-translate-x-full'"
+    :class="is_active ? 'translate-x-0 ' : 'ltr:-translate-x-full rtl:translate-x-full'"
     class="fixed z-20 flex flex-col h-screen overflow-auto transition-transform duration-150 ease-in transform shadow-xl bg-background ltr:left-0 rtl:right-0 lg:static w-80 shadow-primary/10"
   >
     <div>

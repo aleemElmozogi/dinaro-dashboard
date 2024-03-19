@@ -1,7 +1,7 @@
 <template>
   <section
     v-if="breadcrumb && breadcrumb.length > 0"
-    class="w-full bg-primary/5 relative py-2 px-5 z-10 bg-secondary border-b-[1px]  flex items-center"
+    class="w-full bg-primary/5 relative py-2 px-5 z-10 bg-primary-foreground border-b-[1px]  flex items-center"
   >
     <div class="container px-5 mx-auto">
       <ul class="flex items-center justify-start gap-2">
