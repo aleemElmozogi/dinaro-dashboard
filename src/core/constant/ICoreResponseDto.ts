@@ -1,13 +1,13 @@
 export enum CoreResponseType {
-    Success = 1,
-    BadRequest = 2,
-    ServerError = 3,
+  none,
+  success,
+  failure,
+  techError,
+  unauthorized,
 }
 
 export default interface CoreResponseDto<T> {
-    type: CoreResponseType;
-    traceId: string;
-    content: T;
-    messages: string[];
+  resultType: CoreResponseType;
+  content: T;
+  message: string;
 }
-

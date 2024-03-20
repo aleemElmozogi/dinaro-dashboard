@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, type AxiosInstance, AxiosResponse } from "axios";
+import {  type AxiosInstance, AxiosResponse } from "axios";
 import { UserData } from "@/features/Auth/models/UserData.ts";
 import { Service } from "typedi";
 import { LoginRequestDTO } from "@/features/Auth/models/LoginRequestDTO.ts";

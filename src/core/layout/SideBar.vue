@@ -36,8 +36,8 @@
           :to="{
             name: route.name,
           }"
-          class="inline-flex flex-row items-center w-full gap-2 px-4 py-1 bg-primary-foreground"
-          active-class="font-medium rounded-lg bg-primary "
+          class="inline-flex flex-row items-center w-full gap-2 px-4 py-1"
+          active-class="inline-flex flex-row items-center w-full gap-2 px-4 py-1 font-medium rounded-lg bg-primary"
         >
           <i :class="route.icon" class="text-xl"></i>
           <span class="mx-1 leading-10 text-md !whitespace-nowrap">{{
