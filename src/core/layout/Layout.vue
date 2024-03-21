@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row w-full h-screen bg-primary-foreground/50">
+  <div class="flex flex-row w-full h-screen bg-primary-foreground">
     <SideBar :is_active="is_active" @toggleSidebar="toggleSidebar"/>
     <main
         class="flex flex-col flex-grow w-full transition-all duration-150 ease-in main"

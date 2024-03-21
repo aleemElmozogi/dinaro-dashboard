@@ -3,7 +3,7 @@
     <div
       id="Container"
       v-if="init"
-      class="p-5 rounded-lg bg-primary-foreground shadow-primary"
+      class="p-5 rounded-lg bg-background shadow-primary"
     >
       <template v-if="coreContentstate">
         <template v-if="coreContentstate.status == CoreContentStatus.pure">

@@ -7,7 +7,7 @@
       class="mx-auto"
       src="https://lottie.host/?file=7af8364c-d18a-4d1f-847b-3d884ac566ea/IyaJVhARLZ.json"
     ></iframe>
-    <p class="">{{ message || "Oops! There's no result" }}</p>
+    <p class="">{{ message || "لا يوجد نتائج لعرضها" }}</p>
   </div>
 </template>
 <script lang="ts" setup>
