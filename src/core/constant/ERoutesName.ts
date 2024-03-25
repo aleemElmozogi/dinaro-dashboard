@@ -8,5 +8,6 @@ export enum ERoutesName {
   USERS_INDEX = "users.index",
   USERS_CREATE = "users.create",
   USERS_EDIT = "users.edit",
+  USERS_SHOW = "users.show",
   //
 }

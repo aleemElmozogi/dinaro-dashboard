@@ -10,11 +10,14 @@
           <TableCaption>قائمة المستخدمين </TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead>avatar</TableHead>
-              <TableHead>name</TableHead>
-              <TableHead>email</TableHead>
-              <TableHead>phone</TableHead>
-              <TableHead>is Active</TableHead>
+              <TableHead>الاسم الاول</TableHead>
+              <TableHead>الاسم التاني</TableHead>
+              <TableHead>البريد الالكتروني</TableHead>
+              <TableHead>رقم الهاتف</TableHead>
+              <TableHead>العنوان</TableHead>
+              <TableHead>تاريخ الميلاد</TableHead>
+              <TableHead>عدد الاصدقاء</TableHead>
+              <TableHead>عدد المحافظ</TableHead>
               <TableHead>-</TableHead>
             </TableRow>
           </TableHeader>
@@ -23,19 +26,25 @@
               v-for="item in controller.content.pageContent"
               :key="item.id"
             >
-              <TableCell>
-                <Avatar>
-                  <AvatarImage :src="item.avatar || ''" :alt="item.name" />
-                  <AvatarFallback>{{ item.name }}</AvatarFallback>
-                </Avatar>
-              </TableCell>
-              <TableCell> {{ item.name }} </TableCell>
+              <TableCell> {{ item.firstName }} </TableCell>
+              <TableCell> {{ item.lastName }} </TableCell>
               <TableCell> {{ item.email }} </TableCell>
-              <TableCell> {{ item.phone }} </TableCell>
-              <TableCell>
-                <Badge>
-                  {{ item.isActive ? "تعم" : "لا" }}
-                </Badge>
+              <TableCell> {{ item.phoneNumber }} </TableCell>
+              <TableCell> {{ item.address }} </TableCell>
+              <TableCell> {{ item.dateOfBirth }} </TableCell>
+              <TableCell> {{ item.numberOfFriends }} </TableCell>
+              <TableCell> {{ item.numberOfWallets }} </TableCell>
+              <TableCell class="flex items-center gap-3">
+                <Button
+                  @click="
+                    () =>
+                      $router.push({
+                        name: ERoutesName.USERS_SHOW,
+                        params: { id: item.id },
+                      })
+                  "
+                  >عرض التفاصيل</Button
+                >
               </TableCell>
             </TableRow>
           </TableBody>
@@ -51,11 +60,16 @@
           :itemsPerPage="controller.content.pageSize"
           :sibling-count="1"
           show-edges
+          dir="rtl"
           :default-page="controller.content.pageNumber"
         >
-          <PaginationList v-slot="{ items }" class="flex items-center gap-1">
-            <PaginationFirst />
-            <PaginationPrev />
+          <PaginationList
+            dir="rtl"
+            v-slot="{ items }"
+            class="flex items-center gap-1"
+          >
+            <PaginationNext />
+            <PaginationLast />
 
             <template v-for="(item, index) in items">
               <PaginationListItem
@@ -67,7 +81,11 @@
                 <Button
                   class="w-10 h-10 p-0"
                   @click="
-                    () => (controller.filterOptions.pageNumber = item.value)
+                    () =>
+                      controller.updateFilterOptions({
+                        ...controller.filterOptions,
+                        pageNumber: item.value,
+                      })
                   "
                   :variant="item.value === page ? 'default' : 'outline'"
                 >
@@ -77,8 +95,8 @@
               <PaginationEllipsis v-else :key="item.type" :index="index" />
             </template>
 
-            <PaginationNext />
-            <PaginationLast />
+            <PaginationFirst />
+            <PaginationPrev />
           </PaginationList>
         </Pagination>
       </div>
@@ -109,12 +127,9 @@ import {
   PaginationPrev,
 } from "@/core/components/ui/pagination";
 import Button from "@/core/components/ui/button/Button.vue";
-import Badge from "@/core/components/ui/badge/Badge.vue";
 import NoContent from "@/core/components/ui/NoContent.vue";
-import AvatarImage from "@/core/components/ui/avatar/AvatarImage.vue";
-import Avatar from "@/core/components/ui/avatar/Avatar.vue";
-import AvatarFallback from "@/core/components/ui/avatar/AvatarFallback.vue";
 import { useUsers } from "../controllers/usersController";
+import { ERoutesName } from '../../../core/constant/ERoutesName';
 
 const controller = useUsers();
 

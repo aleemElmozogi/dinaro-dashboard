@@ -59,6 +59,10 @@ export const useUsers = defineStore("UsersStore", () => {
     }
   };
 
+  const updateFilterOptions = (newOptions: FetchUsersRequestDto) => {
+    state.filterOptions = { ...state.filterOptions, ...newOptions };
+  };
+
   watch(
     () => state.filterOptions,
     (newVal) => {
@@ -70,7 +74,8 @@ export const useUsers = defineStore("UsersStore", () => {
     content: computed(() => state.content),
     contentState: computed(() => state.contentState),
     filterOptions: ref(state.filterOptions),
+    updateFilterOptions,
     fetchById,
-    getUsers
+    getUsers,
   } as const;
 });

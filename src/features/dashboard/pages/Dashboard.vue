@@ -6,7 +6,7 @@
 
       <div class="grid grid-cols-1 mt-24 md:gap-16 md:grid-cols-2">
         <div>
-          <p class="my-2 text-2xl font-medium text-gray-800">الطلبات</p>
+          <p class="my-2 text-2xl font-medium text-gray-800">طلبات السحب</p>
           <Table>
             <TableCaption>قائمة اخر الطلبات</TableCaption>
             <TableHeader>

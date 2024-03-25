@@ -16,7 +16,7 @@ const routes: RouteRecordRaw = {
   },
   children: [
     {
-      path: "/index/",
+      path: "index/",
       component: () => import("@/features/users/pages/index.vue"),
       name: ERoutesName.USERS_INDEX,
       meta: {
@@ -28,6 +28,27 @@ const routes: RouteRecordRaw = {
           {
             text: "قائمة المستخدمين",
             router_name: ERoutesName.USERS_INDEX,
+          },
+        ],
+      },
+    },
+    {
+      path: "show/:id",
+      component: () => import("@/features/users/pages/show.vue"),
+      name: ERoutesName.USERS_SHOW,
+      meta: {
+        breadcrumb: [
+          {
+            text: "المستخدمين",
+            router_name: ERoutesName.USERS,
+          },
+          {
+            text: "قائمة المستخدمين",
+            router_name: ERoutesName.USERS_INDEX,
+          },
+          {
+            text: "عرض المستخدم",
+            router_name: ERoutesName.USERS_SHOW,
           },
         ],
       },
