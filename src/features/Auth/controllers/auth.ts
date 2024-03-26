@@ -25,10 +25,11 @@ export const useAuth = defineStore("AuthStore", () => {
     try {
       is_loading.value = true;
       const response = await _repo.login(credentials);
-      user.value = response.data.content;
-      localStorage.setItem("token", response.data.content.value);
-      localStorage.setItem("refreshToken", response.data.content.refreshToken);
-      return response.data;
+      const token = response.data.content;
+      const data = jwtDecode(token);
+      localStorage.setItem("token", token);
+      user.value = data;
+      return data;
     } catch (e) {
       throw e;
     } finally {

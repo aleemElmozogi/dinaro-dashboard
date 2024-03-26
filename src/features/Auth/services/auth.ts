@@ -22,8 +22,8 @@ export default class AuthService {
   }
 
   async login(payload: LoginRequestDTO) {
-    return await this.httpClient.post<CoreResponseDto<UserData>>(
-      "/api/Auth/Signin",
+    return await this.httpClient.post<CoreResponseDto<string>>(
+      "/v1.0/management/Auth",
       payload
     );
   }
