@@ -5,7 +5,7 @@
     </h1>
 
     <div class="my-5">
-      <label for="email">email</label>
+      <label for="email">البريد الالكتروني</label>
       <Field
           name="email"
           id="email"
@@ -18,7 +18,7 @@
     </div>
 
     <div class="my-5">
-      <label for="pin">Password</label>
+      <label for="pin">كلمة المرور</label>
       <Field
           name="pin"
           id="pin"
@@ -39,11 +39,11 @@
 
     <Button
         type="submit"
-        class="w-full bg-primary text-white"
+        class="w-full text-white bg-primary"
         :disabled="auth.is_loading"
     >
       <Loading v-if="auth.is_loading"/>
-      <span v-else>  Signin </span>
+      <span v-else>  تسجيل الدخول </span>
     </Button>
   </Form>
 </template>
@@ -75,7 +75,7 @@ const submit = async (args: any) => {
     await auth.login(args);
     router.push({name: ERoutesName.MAIN});
   } catch (error: unknown) {
-    errorMessage.value = (error as AxiosResponse<CoreResponseDto<undefined>>).data?.messages[0];
+    errorMessage.value = (error as AxiosResponse<CoreResponseDto<undefined>>).data?.message;
   }
 };
 </script>

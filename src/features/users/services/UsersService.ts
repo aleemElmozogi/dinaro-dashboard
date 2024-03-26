@@ -8,6 +8,7 @@ import {
   FetchUsersResponseDto,
 } from "../models/fetchUsersDto";
 import { IDefaultQueryParams } from "@/core/constant/DefaultQueryParams";
+import { UserStatus } from "@/core/constant/UserStatus";
 
 @Service()
 export default class UsersService {
@@ -18,12 +19,18 @@ export default class UsersService {
   async index(request: IDefaultQueryParams) {
     return this.httpCLient.get<
       CoreResponseDto<PagedContent<FetchUsersResponseDto>>
-    >("/v1.0/management/Users/GetAllUsers", { params: request });
+    >("/v1.0/management/Users", { params: request });
   }
 
-  async show(id: number) {
+  async show(id: string) {
     return this.httpCLient.get<CoreResponseDto<FetchUserDetailsResponseDto>>(
-      `/v1.0/management/Users/GetById/${id}`
+      `/v1.0/management/Users/${id}`
+    );
+  }
+
+  async changeStatus(id: string) {
+    return this.httpCLient.put<CoreResponseDto<string>>(
+      `/v1.0/management/Users/${id}/change-status`
     );
   }
 }

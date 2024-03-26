@@ -11,6 +11,7 @@ import {
 } from "../models/fetchUsersDto";
 import UsersService from "../services/UsersService";
 import { DefaultQueryParams } from "../../../core/constant/DefaultQueryParams";
+import { UserStatus } from "@/core/constant/UserStatus";
 
 interface UsersState {
   content: PagedContent<FetchUsersResponseDto>;
@@ -46,7 +47,7 @@ export const useUsers = defineStore("UsersStore", () => {
     }
   };
 
-  const fetchById = async (id: number) => {
+  const fetchById = async (id: string) => {
     try {
       state.contentState.status = CoreContentStatus.loading;
       const { data } = await _repo.show(id);
@@ -54,10 +55,22 @@ export const useUsers = defineStore("UsersStore", () => {
       return data.content;
     } catch (error: any) {
       state.contentState.status = CoreContentStatus.failure;
-      state.contentState.message = error.data?.messages[0];
+      state.contentState.message = error.data?.message;
       throw error;
     }
   };
+
+  const changeStatus = async (id: string) => {
+    try {
+      state.contentState.status = CoreContentStatus.loading;
+      await _repo.changeStatus(id);
+      state.contentState.status = CoreContentStatus.success;
+    } catch (error: any) {
+      state.contentState.status = CoreContentStatus.failure;
+      state.contentState.message = error.data?.message;
+      throw error;
+    }
+  }
 
   const updateFilterOptions = (newOptions: FetchUsersRequestDto) => {
     state.filterOptions = { ...state.filterOptions, ...newOptions };
@@ -77,5 +90,6 @@ export const useUsers = defineStore("UsersStore", () => {
     updateFilterOptions,
     fetchById,
     getUsers,
+    changeStatus
   } as const;
 });

@@ -18,6 +18,7 @@
               <TableHead>تاريخ الميلاد</TableHead>
               <TableHead>عدد الاصدقاء</TableHead>
               <TableHead>عدد المحافظ</TableHead>
+              <TableHead>الحالة</TableHead>
               <TableHead>-</TableHead>
             </TableRow>
           </TableHeader>
@@ -31,11 +32,27 @@
               <TableCell> {{ item.email }} </TableCell>
               <TableCell> {{ item.phoneNumber }} </TableCell>
               <TableCell> {{ item.address }} </TableCell>
-              <TableCell> {{ item.dateOfBirth }} </TableCell>
+              <TableCell> {{ item.dateOfBirthString }} </TableCell>
               <TableCell> {{ item.numberOfFriends }} </TableCell>
               <TableCell> {{ item.numberOfWallets }} </TableCell>
+              <TableCell>
+                <Badge
+                  class="cursor-pointer"
+                  @click="() => controller.changeStatus(item.id).then(() => controller.getUsers())"
+                  :class="
+                    item.status == 1
+                      ? 'bg-green-600'
+                      : item.status == 2
+                      ? 'bg-red-600'
+                      : ''
+                  "
+                >
+                  {{ getUserStatus(item.status) }}
+                </Badge>
+              </TableCell>
               <TableCell class="flex items-center gap-3">
                 <Button
+                  class="text-black"
                   @click="
                     () =>
                       $router.push({
@@ -129,7 +146,9 @@ import {
 import Button from "@/core/components/ui/button/Button.vue";
 import NoContent from "@/core/components/ui/NoContent.vue";
 import { useUsers } from "../controllers/usersController";
-import { ERoutesName } from '../../../core/constant/ERoutesName';
+import { ERoutesName } from "../../../core/constant/ERoutesName";
+import { getUserStatus } from "@/core/constant/UserStatus";
+import Badge from "@/core/components/ui/badge/Badge.vue";
 
 const controller = useUsers();
 

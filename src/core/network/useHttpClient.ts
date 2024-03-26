@@ -1,6 +1,7 @@
 import axios, { type AxiosInstance } from "axios";
 import config from "@/core/config";
 import { useToast } from "../components/ui/toast";
+import CoreResponseDto from "../constant/ICoreResponseDto";
 
 let api: AxiosInstance;
 
@@ -42,6 +43,18 @@ function _createHTTPClient() {
       return Promise.reject(error);
     }
   );
+
+  api.interceptors.response.use(
+    (response) => {
+        const result: CoreResponseDto<any> = response.data;
+
+        if (result.type != 1) {
+            throw response
+        }
+     
+        return response;
+    },
+);
 
   return api;
 }

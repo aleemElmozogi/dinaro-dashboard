@@ -7,7 +7,7 @@ export enum CoreResponseType {
 }
 
 export default interface CoreResponseDto<T> {
-  resultType: CoreResponseType;
+  type: CoreResponseType;
   content: T;
   message: string;
 }

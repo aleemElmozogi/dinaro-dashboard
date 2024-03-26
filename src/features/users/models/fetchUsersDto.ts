@@ -1,5 +1,6 @@
 import { IDefaultQueryParams } from "@/core/constant/DefaultQueryParams";
 import { DefaultQueryParams } from "../../../core/constant/DefaultQueryParams";
+import { UserStatus } from "@/core/constant/UserStatus";
 
 export interface FetchUsersRequestDto extends IDefaultQueryParams {
   search: string;
@@ -25,9 +26,27 @@ export interface FetchUsersResponseDto {
   fullName: string;
   dateOfBirthString: string;
   createdAtString: string;
+  status: UserStatus
+}
+
+
+export interface WalletTypeResponseDto {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+
+}
+
+export interface UserWalletDto {
+  id:string ,
+  balance: number,
+  createdAt: string,
+  updatedAt: string,
+  walletType: WalletTypeResponseDto,
 }
 
 export interface FetchUserDetailsResponseDto extends FetchUsersResponseDto {
   friends: FetchUsersResponseDto[];
-  wallets: FetchUsersResponseDto[];
+  wallets: UserWalletDto[];
 }
