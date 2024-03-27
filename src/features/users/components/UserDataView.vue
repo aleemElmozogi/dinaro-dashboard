@@ -36,6 +36,7 @@ import Labeled from "@/core/components/ui/labeled/Labeled.vue";
 import { FetchUsersResponseDto } from "../models/fetchUsersDto";
 import { useUsers } from "../controllers/usersController";
 import { getUserStatus } from "../../../core/constant/UserStatus";
+import Badge from "@/core/components/ui/badge/Badge.vue";
 
 const controller = useUsers();
 

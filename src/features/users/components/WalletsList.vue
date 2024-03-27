@@ -15,7 +15,7 @@
         <TableBody>
           <TableRow v-for="item in wallets" :key="item.id">
             <TableCell>
-              {{ item.walletType.name }}
+              {{ item.walletTypeName }}
             </TableCell>
             <TableCell> {{ item.balance }} </TableCell>
             <TableCell> {{ item.createdAt }} </TableCell>
@@ -23,19 +23,21 @@
             <TableCell class="flex items-center gap-3">
               <AlertDialog>
                 <AlertDialogTrigger as-child>
-                  <button variant="link">
-                    <span>سحب</span>
-                  </button>
+                  <Button variant="link">
+                    <span>شحن المحفظة</span>
+                  </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle> سحب قيمة من المحفظة </AlertDialogTitle>
+                    <AlertDialogTitle>
+                      عملية شحن المحفظة المحفظة
+                    </AlertDialogTitle>
                   </AlertDialogHeader>
                   <AlertDialogDescription>
                     <input
                       name="balance"
                       type="number"
-                      placeholder="القيمة"
+                      placeholder="ادخل القيمة"
                       class="input"
                       v-model.number="value"
                     />
@@ -45,7 +47,9 @@
                     <AlertDialogAction
                       @click="
                         () => {
-                          // controller.withdraw();
+                          controller.deposit(item.id, value).then(() => {
+                            controller.fetchById($route.params.id as string);
+                          });
                         }
                       "
                     >
@@ -88,7 +92,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/core/components/ui/alert-dialog";
-import { ref } from "yup";
+import { ref } from "vue";
 
 const controller = useUsers();
 

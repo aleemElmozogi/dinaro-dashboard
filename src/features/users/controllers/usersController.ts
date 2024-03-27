@@ -12,6 +12,8 @@ import {
 import UsersService from "../services/UsersService";
 import { DefaultQueryParams } from "../../../core/constant/DefaultQueryParams";
 import { UserStatus } from "@/core/constant/UserStatus";
+import { useToast } from "vue-toastification";
+import WalletService from "@/features/wallet/services/WalletService";
 
 interface UsersState {
   content: PagedContent<FetchUsersResponseDto>;
@@ -21,6 +23,8 @@ interface UsersState {
 
 export const useUsers = defineStore("UsersStore", () => {
   const _repo = Container.get(UsersService);
+  const _walletRepo = Container.get(WalletService);
+  const toast = useToast();
   //
 
   const state = reactive<UsersState>({
@@ -65,12 +69,27 @@ export const useUsers = defineStore("UsersStore", () => {
       state.contentState.status = CoreContentStatus.loading;
       await _repo.changeStatus(id);
       state.contentState.status = CoreContentStatus.success;
+      toast.success("تم تغيير حالة المستخدم بنجاح");
     } catch (error: any) {
       state.contentState.status = CoreContentStatus.failure;
       state.contentState.message = error.data?.message;
       throw error;
     }
-  }
+  };
+
+  const deposit = async (walletId: string, amount: number) => {
+    try {
+      state.contentState.status = CoreContentStatus.loading;
+      const response = await _walletRepo.charge(walletId, amount);
+      state.contentState.status = CoreContentStatus.success;
+      toast.success("تم عملية شحن المحفظة بنجاح   ");
+      return response;
+    } catch (error: any) {
+      state.contentState.status = CoreContentStatus.failure;
+      state.contentState.message = error.data?.message;
+      throw error;
+    }
+  };
 
   const updateFilterOptions = (newOptions: FetchUsersRequestDto) => {
     state.filterOptions = { ...state.filterOptions, ...newOptions };
@@ -90,6 +109,7 @@ export const useUsers = defineStore("UsersStore", () => {
     updateFilterOptions,
     fetchById,
     getUsers,
-    changeStatus
+    changeStatus,
+    deposit,
   } as const;
 });

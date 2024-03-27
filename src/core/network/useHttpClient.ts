@@ -48,7 +48,7 @@ function _createHTTPClient() {
     (response) => {
         const result: CoreResponseDto<any> = response.data;
 
-        if (result.type != 1) {
+        if (result.type && result.type != 1) {
             throw response
         }
      

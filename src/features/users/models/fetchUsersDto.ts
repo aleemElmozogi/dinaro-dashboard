@@ -43,7 +43,8 @@ export interface UserWalletDto {
   balance: number,
   createdAt: string,
   updatedAt: string,
-  walletType: WalletTypeResponseDto,
+  walletTypeId: string,
+  walletTypeName: string,
 }
 
 export interface FetchUserDetailsResponseDto extends FetchUsersResponseDto {

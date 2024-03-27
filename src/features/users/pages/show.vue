@@ -4,15 +4,14 @@
     <template #content>
       <Tabs
         v-if="user"
-        default-value="customer"
+        default-value="userData"
         dir="rtl"
         class="my-8 col-span-full"
       >
-        <TabsList  class="grid w-full grid-cols-5">
+        <TabsList class="grid w-full grid-cols-5">
           <TabsTrigger value="userData"> بيانات المسيتخدم </TabsTrigger>
           <TabsTrigger value="friendsList">قائمة الاصدقاء </TabsTrigger>
           <TabsTrigger value="walletsList"> قائمة المحافظ </TabsTrigger>
-          <TabsTrigger value="transactionsList"> قائمة الحوالات </TabsTrigger>
         </TabsList>
         <TabsContent value="userData">
           <UserDataView :user="user" />
@@ -23,7 +22,6 @@
         <TabsContent value="walletsList">
           <WalletsList :wallets="user.wallets" />
         </TabsContent>
-        <TabsContent value="transactionsList"></TabsContent>
       </Tabs>
 
       <no-content v-else></no-content>
