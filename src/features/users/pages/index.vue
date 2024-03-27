@@ -101,7 +101,7 @@
                     () =>
                       controller.updateFilterOptions({
                         ...controller.filterOptions,
-                        pageNumber: item.value,
+                        page: item.value,
                       })
                   "
                   :variant="item.value === page ? 'default' : 'outline'"

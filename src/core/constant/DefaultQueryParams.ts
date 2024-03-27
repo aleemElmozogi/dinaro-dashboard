@@ -1,9 +1,9 @@
 export interface IDefaultQueryParams {
-  pageNumber: number | undefined;
+  page: number | undefined;
   pageSize: number | undefined;
 }
 
 export const DefaultQueryParams: IDefaultQueryParams = {
-  pageNumber: 1,
+  page: 1,
   pageSize: 10,
 };

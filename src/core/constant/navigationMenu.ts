@@ -11,4 +11,14 @@ export const navigationMenu = [
     name: ERoutesName.USERS,
     icon: "bx bxs-user-detail",
   },
+  {
+    title: "المحافظ",
+    name: ERoutesName.WALLET,
+    icon: "bx bxs-wallet",
+  },
+  {
+    title: "المعاملات",
+    name: ERoutesName.TRANSACTIONS,
+    icon: "bx bx-transfer",
+  },
 ];

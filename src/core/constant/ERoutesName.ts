@@ -10,4 +10,10 @@ export enum ERoutesName {
   USERS_EDIT = "users.edit",
   USERS_SHOW = "users.show",
   //
+  WALLET = "wallet",
+  WALLET_INDEX = "wallet.index",
+  WALLET_CREATE = "wallet.create",
+  // 
+  TRANSACTIONS = "transactions",
+  TRANSACTIONS_INDEX = "transactions.index",
 }

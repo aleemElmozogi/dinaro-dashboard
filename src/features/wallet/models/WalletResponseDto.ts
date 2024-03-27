@@ -1,12 +1,12 @@
 
 
 export interface WalletResponseDto {
-    Id: string
-    WalletType: string
-    UserName: string
-    WalletTypeId: string
-    UserId: string
-    Balance: number
-    CreatedAt: string
-    UpdatedAt: string
+    id: string
+    walletType: string
+    userName: string
+    walletTypeId: string
+    userId: string
+    balance: number
+    createdAt: string
+    updatedAt: string
 }
