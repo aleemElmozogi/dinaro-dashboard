@@ -11,6 +11,7 @@ import {
 import { useToast } from "vue-toastification";
 import WalletService from "@/features/wallet/services/WalletService";
 import { WalletResponseDto } from "../models/WalletResponseDto";
+import { useRoute } from "vue-router";
 
 interface WalletState {
   content: PagedContent<WalletResponseDto>;
@@ -20,6 +21,7 @@ interface WalletState {
 
 export const useWallets = defineStore("WalletStore", () => {
   const _repo = Container.get(WalletService);
+  const route = useRoute();
   const toast = useToast();
   //
 
@@ -79,6 +81,17 @@ export const useWallets = defineStore("WalletStore", () => {
   };
 
   watch(
+    () => route.query,
+    () => {
+      const queryParams = {
+        ...state.filterOptions,
+        ...route.query,
+      };
+      updateFilterOptions(queryParams);
+    }
+  );
+
+  watch(
     () => state.filterOptions,
     (newVal) => {
       getWallets(newVal);
@@ -92,6 +105,6 @@ export const useWallets = defineStore("WalletStore", () => {
     fetchById,
     getWallets,
     charge,
-    updateFilterOptions
+    updateFilterOptions,
   } as const;
 });

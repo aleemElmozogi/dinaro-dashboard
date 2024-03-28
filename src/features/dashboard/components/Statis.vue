@@ -1,6 +1,6 @@
 <template>
   <div
-    class="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-8 lg:gap-12 xl:gap-16"
+    class="grid grid-cols-1 gap-5 md:grid-cols-4 md:gap-8 lg:gap-10 xl:gap-12"
   >
     <div
       v-for="item in stats"
@@ -10,18 +10,55 @@
       <p class="text-xl text-gray-900">{{ item.title }}</p>
       <p class="text-3xl font-bold">{{ item.value }}</p>
 
-      <i
-        class="block text-end text-7xl bx bx-equalizer"
-      ></i>
+      <i class="block text-end text-7xl bx bx-equalizer"></i>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { useDashboard } from "../controllers/dashboard";
+import { ref, watch } from 'vue';
 
-const stats = [
-  { color: "blue-400", title: "عدد المستخدمين", value: 100 },
-  { color: "green-400", title: "عدد الطلبات", value: 200 },
-  { color: "purple-500", title: "عدد اي شي", value: 300 },
-];
+const controller = useDashboard();
+
+const stats = ref([
+  {
+    title: "عدد المستخدمين",
+    value: controller.content.usersCount,
+  },
+  {
+    title: "عدد طلبات السحب'",
+    value: controller.content.depositTransactionsCount,
+  },
+  {
+    title: "عدد عمليات التحويل",
+    value: controller.content.transferTransactionsCount,
+  },
+  {
+    title: "اجمالي الارباح",
+    value: controller.content.totalIncomes,
+  },
+]);
+
+
+watch(() => controller.content, () => {
+  stats.value = [
+    {
+      title: "عدد المستخدمين",
+      value: controller.content.usersCount,
+    },
+    {
+      title: "عدد طلبات السحب'",
+      value: controller.content.depositTransactionsCount,
+    },
+    {
+      title: "عدد عمليات التحويل",
+      value: controller.content.transferTransactionsCount,
+    },
+    {
+      title: "اجمالي الارباح",
+      value: controller.content.totalIncomes,
+    },
+  ];
+});
 </script>

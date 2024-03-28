@@ -1,17 +1,17 @@
 <template>
-  <div class="flex items-center xl:w-[360px] mb-5">
+  <div class="flex items-center xl:w-[360px] ">
     <input
       type="search"
       v-model="Search"
       @keyup.enter="onSearch"
-      placeholder="search..."
-      class="w-full px-4 py-3 border-none rounded-l-lg bg-dark100 focus:outline-none focus:border-primary"
+      placeholder="بحث..."
+      class="w-full px-4 py-3 bg-gray-100 border-none rounded-r-lg focus:outline-none focus:border-primary"
     />
 
     <button
       type="button"
       @click="onSearch"
-      class="flex items-center justify-center px-4 py-3 rounded-r-lg bg-primary-foreground focus:outline-none focus:border-primary"
+      class="flex items-center justify-center px-4 py-3 rounded-l-lg bg-primary focus:outline-none focus:border-primary"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -31,18 +31,26 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from 'vue';
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 
 const Search = ref("");
 
+
+onMounted(() => {
+  if (router.currentRoute.value.query["search"]) {
+    Search.value = router.currentRoute.value.query["search"] as string;
+  }
+});
+
+
 watch(
   () => router.currentRoute.value.query,
   (query) => {
-    if (query["searchTerm"]) {
-      Search.value = query["searchTerm"] as string;
+    if (query["search"]) {
+      Search.value = query["search"] as string;
     }
   }
 );
@@ -50,7 +58,7 @@ watch(
 const onSearch = () => {
   const prev_query = router.currentRoute.value.query;
   const query = Object.assign({}, prev_query);
-  query["searchTerm"] = Search.value;
+  query["search"] = Search.value;
   router.push({ query });
 };
 </script>

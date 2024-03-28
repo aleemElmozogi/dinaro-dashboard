@@ -16,7 +16,7 @@ const routes: RouteRecordRaw = {
   },
   children: [
     {
-      path: "index/",
+      path: "index",
       component: () => import("@/features/users/pages/index.vue"),
       name: ERoutesName.USERS_INDEX,
       meta: {

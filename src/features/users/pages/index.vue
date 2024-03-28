@@ -4,18 +4,15 @@
   <Container :coreContentstate="controller.contentState">
     <template v-slot:content>
       <div>
-        <Filter />
+        <SearchInput />
 
         <Table>
           <TableCaption>قائمة المستخدمين </TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead>الاسم الاول</TableHead>
-              <TableHead>الاسم التاني</TableHead>
+              <TableHead>الاسم </TableHead>
               <TableHead>البريد الالكتروني</TableHead>
               <TableHead>رقم الهاتف</TableHead>
-              <TableHead>العنوان</TableHead>
-              <TableHead>تاريخ الميلاد</TableHead>
               <TableHead>عدد الاصدقاء</TableHead>
               <TableHead>عدد المحافظ</TableHead>
               <TableHead>الحالة</TableHead>
@@ -27,28 +24,49 @@
               v-for="item in controller.content.pageContent"
               :key="item.id"
             >
-              <TableCell> {{ item.firstName }} </TableCell>
-              <TableCell> {{ item.lastName }} </TableCell>
+              <TableCell> {{ item.fullName }} </TableCell>
               <TableCell> {{ item.email }} </TableCell>
               <TableCell> {{ item.phoneNumber }} </TableCell>
-              <TableCell> {{ item.address }} </TableCell>
-              <TableCell> {{ item.dateOfBirthString }} </TableCell>
               <TableCell> {{ item.numberOfFriends }} </TableCell>
               <TableCell> {{ item.numberOfWallets }} </TableCell>
               <TableCell>
-                <Badge
-                  class="cursor-pointer"
-                  @click="() => controller.changeStatus(item.id).then(() => controller.getUsers())"
-                  :class="
-                    item.status == 1
-                      ? 'bg-green-600'
-                      : item.status == 2
-                      ? 'bg-red-600'
-                      : ''
-                  "
-                >
-                  {{ getUserStatus(item.status) }}
-                </Badge>
+                <AlertDialog>
+                  <AlertDialogTrigger as-child >
+                    <Badge
+                      class="cursor-pointer"
+                      :class="
+                        item.status == 1
+                          ? 'bg-green-600'
+                          : item.status == 2
+                          ? 'bg-red-600'
+                          : ''
+                      "
+                    >
+                      {{ getUserStatus(item.status) }}
+                    </Badge>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle> تغيير حالة المستخدم </AlertDialogTitle>
+                    </AlertDialogHeader>
+                    <AlertDialogDescription>
+                      هل انت متاكد من تغيير حالة المستخدم
+                    </AlertDialogDescription>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>الغاء</AlertDialogCancel>
+                      <AlertDialogAction
+                        @click="
+                          () =>
+                            controller
+                              .changeStatus(item.id)
+                              .then(() => controller.getUsers())
+                        "
+                      >
+                        تأكيد
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </TableCell>
               <TableCell class="flex items-center gap-3">
                 <Button
@@ -132,7 +150,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/core/components/ui/table";
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
 import {
   Pagination,
   PaginationEllipsis,
@@ -149,11 +167,38 @@ import { useUsers } from "../controllers/usersController";
 import { ERoutesName } from "../../../core/constant/ERoutesName";
 import { getUserStatus } from "@/core/constant/UserStatus";
 import Badge from "@/core/components/ui/badge/Badge.vue";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/core/components/ui/alert-dialog";
+import SearchInput from "@/core/components/ui/searchInput/SearchInput.vue";
+import { useRoute } from 'vue-router';
 
 const controller = useUsers();
+const route = useRoute();
+
+watch(() => route.query, () => {  
+  const queryParams = {
+    ...controller.filterOptions,
+    ...route.query,
+  };
+  controller.getUsers(queryParams);
+});
+
 
 onMounted(() => {
-  controller.getUsers();
+  const queryParams = {
+    ...controller.filterOptions,
+    ...route.query,
+  };
+  controller.getUsers(queryParams);
 });
 </script>
 

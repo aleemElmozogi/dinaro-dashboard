@@ -4,54 +4,121 @@
     <template v-slot:content>
       <Statis />
 
-      <div class="grid grid-cols-1 mt-24 md:gap-16 md:grid-cols-2">
+      <div class="mt-24">
         <div>
           <p class="my-2 text-2xl font-medium text-gray-800">طلبات السحب</p>
           <Table>
             <TableCaption>قائمة اخر الطلبات</TableCaption>
             <TableHeader>
               <TableRow>
-                <TableHead>تاريخ الطلب</TableHead>
-                <TableHead>السعر</TableHead>
-                <TableHead>الحالة</TableHead>
+                <TableHead>العنوان</TableHead>
+                <TableHead> المبلغ </TableHead>
+                <TableHead> الرسوم </TableHead>
+                <TableHead> تاريخ العملية </TableHead>
                 <TableHead>-</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               <TableRow
-                v-for="(item, index) in controller.content.pageContent"
+                v-for="(item, index) in transactionController
+                  .withdrawRequestContent.pageContent"
                 :key="index"
               >
-                <TableCell> </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-          <NoContent v-if="!controller.content.pageContent.length" />
-        </div>
-        <div>
-          <p class="my-2 text-2xl font-medium text-gray-800">المبيعات</p>
+                <TableCell>
+                  {{ item.title || "-" }}
+                </TableCell>
+                <TableCell>
+                  {{ item.amount.toFixed(2) }}
+                </TableCell>
+                <TableCell>
+                  {{ item.fee.toFixed(2) }}
+                </TableCell>
+                <TableCell>
+                  {{ new Date(item.transactionDate).toLocaleDateString() }}
+                </TableCell>
 
-          <Table>
-            <TableCaption>قائمة اخر المبيعات</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead>صورة المنتج</TableHead>
-                <TableHead>المنتج</TableHead>
-                <TableHead>الكمية</TableHead>
-                <TableHead>السعر</TableHead>
-                <TableHead>الاجمالي</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow
-                v-for="(item, index) in controller.content.pageContent"
-                :key="index"
-              >
-                <TableCell> </TableCell>
+                <TableCell class="flex items-center gap-4">
+                  <AlertDialog>
+                    <AlertDialogTrigger as-child>
+                      <Button class="bg-red-500"> رفض </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          تغيير حالة العملية
+                        </AlertDialogTitle>
+                      </AlertDialogHeader>
+                      <AlertDialogDescription>
+                        هل انت متاكد من رفض العملية
+                      </AlertDialogDescription>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>الغاء</AlertDialogCancel>
+                        <AlertDialogAction
+                          @click="
+                            () =>
+                              transactionController
+                                .rejectWithdrawRequest(item.id)
+                                .then(() =>
+                                  transactionController.getWithdrawRequest()
+                                )
+                          "
+                        >
+                          تأكيد
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                  <AlertDialog>
+                    <AlertDialogTrigger as-child>
+                      <Button class="bg-green-500"> موافقة </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          تغيير حالة العملية
+                        </AlertDialogTitle>
+                      </AlertDialogHeader>
+                      <AlertDialogDescription>
+                        هل انت متاكد من تأكيد العملية
+                      </AlertDialogDescription>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>الغاء</AlertDialogCancel>
+                        <AlertDialogAction
+                          @click="
+                            () =>
+                              transactionController
+                                .approveWithdrawRequest(item.id)
+                                .then(() =>
+                                  transactionController.getWithdrawRequest()
+                                )
+                          "
+                        >
+                          تأكيد
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </TableCell>
               </TableRow>
             </TableBody>
           </Table>
-          <NoContent v-if="!controller.content.pageContent.length" />
+          <NoContent
+            v-if="
+              !transactionController.withdrawRequestContent.pageContent.length
+            "
+          />
+          <router-link
+            class="block text-center text-blue-500"
+            :to="{
+              name: ERoutesName.TRANSACTIONS_INDEX,
+              query: {
+                type: ETransactionType.Withdraw,
+                state: TransactionState.Pending,
+              },
+            }"
+          >
+            عرض الكل
+          </router-link>
         </div>
       </div>
     </template>
@@ -72,8 +139,34 @@ import {
 } from "@/core/components/ui/table";
 import { useDashboard } from "../controllers/dashboard";
 import NoContent from "@/core/components/ui/NoContent.vue";
+import { onMounted } from "vue";
+import { useTransactions } from "../../transactions/controllers/transactionsController";
+import Button from "@/core/components/ui/button/Button.vue";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/core/components/ui/alert-dialog";
+import { ERoutesName } from "@/core/constant/ERoutesName";
+import { ETransactionType } from "@/core/constant/ETransactionType";
+import { TransactionState } from "../../../core/constant/ETransactionState";
 
 const controller = useDashboard();
+const transactionController = useTransactions();
+
+onMounted(() => {
+  controller.getStats();
+  transactionController.getWithdrawRequest({
+    page: 1,
+    pageSize: 5,
+  });
+});
 </script>
 
 <style scoped></style>

@@ -5,24 +5,28 @@ import PagedContent from "@/core/constant/IPagedContent";
 import { CoreContentState } from "@/core/constant/CoreContentState";
 import { CoreContentStatus } from "@/core/constant/CoreContentStatus";
 import { DefaultQueryParams } from "../../../core/constant/DefaultQueryParams";
+import DashboardService from "../services/Dashboard";
 
 export const useDashboard = defineStore("DashboardStore", () => {
+  const _repo = Container.get(DashboardService);
+
   //
 
   const state = reactive({
     content: {
-      pageContent: [],
-      numberOfPages: 1,
-      pageSize: 0,
-      pageNumber: 0,
+      usersCount: 0,
+      depositTransactionsCount: 0,
+      transferTransactionsCount: 0,
+      totalIncomes: 0,
     },
     contentState: new CoreContentState(),
-    filterOptions: { ...DefaultQueryParams, search: "" },
   });
 
   const getStats = async () => {
     try {
       state.contentState.status = CoreContentStatus.loading;
+      const response = await _repo.statis();
+      state.content = response.data.content;
       state.contentState.status = CoreContentStatus.success;
     } catch (error: any) {
       state.contentState.status = CoreContentStatus.failure;
@@ -31,11 +35,9 @@ export const useDashboard = defineStore("DashboardStore", () => {
     }
   };
 
-
-
   return {
     content: computed(() => state.content),
     contentState: computed(() => state.contentState),
-    getStats
+    getStats,
   } as const;
 });

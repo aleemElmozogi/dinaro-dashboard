@@ -7,6 +7,7 @@
       as="select"
       v-model="modelValue"
       class="input"
+      @change="$emit('change', modelValue)"
     >
       <option value="" disabled hidden>select...</option>
       <slot />
@@ -19,6 +20,8 @@ import { Field, ErrorMessage } from "vee-validate";
 
 
 const modelValue = defineModel<string | number>();
+
+defineEmits(["change"]);
 
 defineProps<{
   name: string;

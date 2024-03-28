@@ -3,6 +3,9 @@
 
   <Container :coreContentstate="controller.contentState">
     <template v-slot:content>
+      <div class="flex items-center gap-4 my-3">
+        <SearchInput />
+      </div>
       <Table>
         <TableCaption>قائمة المحافظ</TableCaption>
         <TableHeader>
@@ -35,8 +38,12 @@
               </router-link>
             </TableCell>
             <TableCell> {{ item.balance }} </TableCell>
-            <TableCell> {{ new Date(item.createdAt).toLocaleDateString() }} </TableCell>
-            <TableCell> {{ new Date(item.updatedAt).toLocaleDateString() }} </TableCell>
+            <TableCell>
+              {{ new Date(item.createdAt).toLocaleDateString() }}
+            </TableCell>
+            <TableCell>
+              {{ new Date(item.updatedAt).toLocaleDateString() }}
+            </TableCell>
             <TableCell class="flex items-center gap-3">
               <AlertDialog>
                 <AlertDialogTrigger as-child>
@@ -168,12 +175,19 @@ import {
   AlertDialogTrigger,
 } from "@/core/components/ui/alert-dialog";
 import { ERoutesName } from "../../../core/constant/ERoutesName";
+import SearchInput from "@/core/components/ui/searchInput/SearchInput.vue";
+import { useRoute } from "vue-router";
 
 const controller = useWallets();
 const chargeAmount = ref<number>(0);
+const route = useRoute();
 
 onMounted(() => {
-  controller.getWallets();
+  const queryParams = {
+    ...controller.filterOptions,
+    search: route.query["search"] ? +route.query["search"] : undefined,
+  };
+  controller.getWallets(queryParams);
 });
 </script>
 
