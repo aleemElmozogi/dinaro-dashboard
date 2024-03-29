@@ -1,4 +1,5 @@
 export enum ETransactionType {
+  All = 0,
   Withdraw = 1,
   Deposit = 2,
   Transfer = 3,
@@ -8,6 +9,8 @@ export enum ETransactionType {
 
 export const getTransactionType = (value: ETransactionType) => {
   switch (value) {
+    case ETransactionType.All:
+      return "الكل";
     case ETransactionType.Withdraw:
       return "سحب";
     case ETransactionType.Deposit:
@@ -17,17 +20,18 @@ export const getTransactionType = (value: ETransactionType) => {
     case ETransactionType.Payment:
       return "دفع";
     case ETransactionType.Received:
-      return "استلام";
+      return "تحويل";
     default:
       return "";
   }
 };
 
 export const getTransactionTypeOptions =  [
+    { label: "الكل", value: ETransactionType.All },
     { label: "سحب", value: ETransactionType.Withdraw },
     { label: "إيداع", value: ETransactionType.Deposit },
     { label: "تحويل", value: ETransactionType.Transfer },
     { label: "دفع", value: ETransactionType.Payment },
-    { label: "استلام", value: ETransactionType.Received },
+    // { label: "استلام", value: ETransactionType.Received },
   ];
 
