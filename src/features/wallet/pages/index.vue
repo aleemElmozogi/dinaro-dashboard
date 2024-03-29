@@ -72,7 +72,7 @@
                       @click="
                         () => {
                           controller.charge(item.id, chargeAmount).then(() => {
-                            controller.fetchById($route.params.id as string);
+                            controller.getWallets(controller.filterOptions);
                           });
                         }
                       "
