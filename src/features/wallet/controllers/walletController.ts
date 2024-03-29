@@ -51,6 +51,8 @@ export const useWallets = defineStore("WalletStore", () => {
 
   const fetchById = async (id: string) => {
     try {
+      if(id == undefined)
+        return ;
       state.contentState.status = CoreContentStatus.loading;
       const { data } = await _repo.show(id);
       state.contentState.status = CoreContentStatus.success;
